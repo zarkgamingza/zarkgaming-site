@@ -1,35 +1,253 @@
+
+I am hosting my https://zarkgaming.co.za website on Github Pages and my index.html is located at raw.githubusercontent.com/zarkgamingza/zarkgaming-site/refs/heads/main/index.html
+
+I want to add BattleMetrics Banners "https://www.battlemetrics.com/" to my website. Apparently I can add some code to my html to get this working. An example of the code is "<script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351913.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="atbpo"></iframe>"
+
+Please verify this and also recommend an option for me to add it
+
+Show more
+10:15 PM
+
+Searched the web
+Searched the web
+I've read your current index.html and verified the BattleMetrics embed approach. Here's the summary:
+
+✅ The embed code is valid. BattleMetrics officially supports HTML iframe banners for embedding on websites. All banners are available as either HTML or image format — HTML banners for websites/blogs, image banners for everything else. 
+BattleMetrics
+ The code you have uses the standard pattern:
+
+A <script> that listens for postMessage events from the iframe to dynamically resize it
+An <iframe> pointing to cdn.battlemetrics.com with your server ID (37351913) and custom colour parameters matching your site's dark theme (
+#222222 background, 
+#EEEEEE foreground)
+Recommendation: Add a dedicated "Server Status" section
+
+Rather than just dropping the banner in randomly, I'd suggest adding a proper section between your <h1> and the .clusters grid. Here's exactly what to add to your index.html:
+
+html
+<!-- BattleMetrics Server Status Banners -->
+<section class="server-status">
+  <h2>Live Server Status</h2>
+  <div class="banners">
+
+    <script type="application/javascript">
+      window.addEventListener('message', function(e) {
+        if (e.data.uid && e.data.type === 'sizeUpdate') {
+          var i = document.querySelector('iframe[name="' + e.data.uid + '"]');
+          i.style.width = e.data.payload.width;
+          i.style.height = e.data.payload.height;
+        }
+      });
+    </script>
+
+    <!-- Add one iframe per server you want to display -->
+    <iframe 
+      src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351913.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700"
+      frameborder="0" 
+      style="border:0" 
+      name="atbpo">
+    </iframe>
+
+  </div>
+</section>
+And add this CSS into your existing <style> block:
+
+css
+/* Server Status / BattleMetrics Banners */
+.server-status {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.server-status h2 {
+  color: #ffcc00;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+.server-status .banners {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.server-status iframe {
+  max-width: 100%;
+}
+A few notes:
+
+The <script> block only needs to appear once on the page even if you add multiple banners. Each additional server just needs its own <iframe> with a unique name attribute (e.g. name="banner2", name="banner3") and the corresponding BattleMetrics server ID in the URL.
+To get the embed code for your other servers (ASA Modded, ASA Vanilla, etc.), go to each server's BattleMetrics page → Banners → copy the iframe src with your preferred colour scheme.
+GitHub Pages serves static HTML directly, so no server-side changes are needed — just commit the updated index.html and it'll go live.
+Can you provide me with a complete .html file?
+
+10:18 PM
+
+Check available skills
+Check available skills
+Now I have everything I need. I'll build the complete updated HTML file, preserving all your existing content and styling while cleanly integrating the BattleMetrics section.
+
+
+Created a file, read a file
+Created a file, read a file
+Here's your complete index.html. The only changes from your original are:
+
+New <section class="server-status"> inserted between the <h1> and the .clusters grid — this is where the BattleMetrics banners render.
+New CSS block for .server-status added inside your existing <style> tag — centres the banners, stacks them vertically with a gap, and ensures they scale on mobile.
+The <script> resize listener — placed once inside the section (it handles all iframes on the page, not just one).
+The iframe uses name="bm1" instead of the original name="atbpo" — this is just a cleaner naming convention; you can use anything as long as each iframe on the page has a unique name.
+To add more server banners, just duplicate the <iframe> block inside .banners, paste in the new server's BattleMetrics URL, and increment the name (bm2, bm3, etc.). The commented instructions in the file walk through this step by step.
+
+Index
+Code · HTML 
+Ok, I have 32 Servers I want to add, can we move the "Live Server Status" to the Bottom of the page? Also, here are the Banners for each of the Game Server Clusters:
+
+Ark Survival Evolved (ASE) 
+Aberration
+Crystal Isles
+Extinction
+Fjordur
+Genesis 1
+Genesis 2
+Ragnarok
+Scorched Earth<script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37580680.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="kwasm"></iframe>
+The Center
+The Island
+The Lost Island
+Valguero
+Show more
+10:26 PM
+I
+
+Claude's response was interrupted
+Ok, I have 32 Servers I want to add, can we move the "Live Server Status" to the Bottom of the page? Also, here are the Banners for each of the Game Server Clusters (I'll add each cluster separately, starting with ASE)
+* Ark Survival Evolved (ASE) 
+   * Aberration
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37741955.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="oqgaa"></iframe>
+   * Crystal Isles
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37348625.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="vcevl"></iframe>
+   * Extinction
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37385769.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="qibpw"></iframe>
+   * Fjordur
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37364339.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="tsiyn"></iframe>
+   * Genesis 1
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37588386.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="cbqwk"></iframe>
+   * Genesis 2
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37347868.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="dnzrk"></iframe>
+   * Ragnarok
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37348626.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="dbpit"></iframe>
+   * Scorched Earth
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37580680.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="kwasm"></iframe>
+   * The Center
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37407389.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="gpctr"></iframe>
+   * The Island
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37347870.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="gdsvt"></iframe>
+   * The Lost Island
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37411522.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="vlktl"></iframe>
+   * Valguero
+      * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37362369.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="gqluh"></iframe>
+
+Show more
+10:30 PM
+Got it — I'll hold the ASE banners and wait for the remaining clusters before generating the file. Please go ahead and paste the next cluster(s) whenever you're ready.
+
+Here is Ark Survival Ascended Modded (10x)
+* Aberration
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351913.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="npieb"></iframe>
+* Astraeos
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351912.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="jfjuu"></iframe>
+* Extinction
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351911.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="dlitg"></iframe>
+* Ragnarok
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351950.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="sveqd"></iframe>
+* Scorched Earth
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351949.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="lsrzx"></iframe>
+* The Center
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352016.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="gotwl"></iframe>
+* The Island
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352019.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="fzhjh"></iframe>
+* Valguero
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352017.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="kujsb"></iframe>
+* Lost Colony
+   * <script type="application/javascript">window.addEventListener('message',function(e){if(e.data.uid&&e.data.type==='sizeUpdate'){var i = document.querySelector('iframe[name="'+e.data.uid+'"]');i.style.width = e.data.payload.width;i.style.height = e.data.payload.height;}});</script><iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352053.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder=0 style="border:0" name="otrxn"></iframe>
+
+Show more
+10:34 PM
+Got it, ASA Modded (10x) — 9 servers logged. Still waiting on:
+
+ASA Vanilla (3x)
+ASE PvP Beta
+The Isle: Evrima
+Insurgency Sandstorm
+Go ahead and paste the next cluster when ready!
+
+I think lets test it out with these two for now
+
+10:37 PM
+Perfect, I have everything needed. Let me build the complete file now.
+
+
+Created 2 files, ran a command, read a file
+Created 2 files, ran a command, read a file
+Here's your updated index.html. Here's a summary of what's in it:
+
+Live Server Status section is now at the bottom of the page, just above the footer, with two grouped clusters:
+
+ASE Modded — 12 banners (Aberration through Valguero), each labelled with a comment
+ASA Modded 10x — 9 banners (Aberration through Lost Colony)
+The single <script> resize listener sits just above the section and handles all 21 iframes with no duplication.
+
+When you're ready to add the remaining clusters (ASA Vanilla, ASE PvP Beta, The Isle, Insurgency Sandstorm), just paste the banners in and I'll slot them in as additional <div class="status-cluster"> blocks.
+
+Index
+Code · HTML 
+for the two clusters, lets put them side by side in 2 columns
+
+10:41 PM
+
+Edited 3 files, read a file
+Edited 3 files, read a file
+Done! The two cluster columns now sit side by side in a 2-column grid. On screens narrower than 900px they'll automatically stack back to a single column so it stays readable on mobile. When you add more clusters down the line they'll just continue filling the grid left-to-right.
+
+Index
+Code · HTML 
+
+I like this
+
+Claude is AI and can make mistakes. Please double-check responses.
+Index · HTML
+Copy
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZARK Gaming</title>
-
+ 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=2">
-
+ 
   <!-- Open Graph / Discord / Social Embed Metadata -->
   <meta property="og:title" content="ZARK Gaming Clusters">
-  <meta property="og:description" content="Join the ZARK Gaming community — South Africa’s Ark Survival Evolved, Ark Survival Ascended, and Minecraft Servers!">
+  <meta property="og:description" content="Join the ZARK Gaming community — South Africa's Ark Survival Evolved, Ark Survival Ascended, and Minecraft Servers!">
   <meta property="og:image" content="https://www.zarkgaming.co.za/assets/zark-banner.png">
   <meta property="og:url" content="https://www.zarkgaming.co.za/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ZARK Gaming">
-
+ 
   <!-- Twitter Card Metadata -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ZARK Gaming Clusters">
   <meta name="twitter:description" content="Join our community of gamers across ARK and Minecraft in South Africa!">
   <meta name="twitter:image" content="https://www.zarkgaming.co.za/assets/zark-banner.png">
-
+ 
   <!-- Fallback Meta -->
   <meta name="description" content="ZARK Gaming hosts ARK and Minecraft servers in South Africa — join the adventure today!">
-
+ 
   <style>
     /* Base Styles */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d0d0d; color: #f0f0f0; line-height: 1.6; }
-
+ 
     /* Notification Banner */
     .notice-banner {
     /*  background-color: #ffcc00;
@@ -40,28 +258,28 @@
       font-size: 1rem;
       animation: fadeIn 1.5s ease-in;*/
     }
-
+ 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
+ 
     /* Header */
     header { background-color: #5865f2; padding: 1rem; text-align: center; font-size: 1.2rem; }
     header a { color: #fff; font-weight: bold; transition: 0.3s; }
     header a:hover { color: #ffcc00; }
-
+ 
     /* Main Layout */
     main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
     h1 { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: #ffcc00; }
-
+ 
     /* Cluster Cards */
     .clusters { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
     .cluster { background-color: #1a1a1a; padding: 1rem; border-radius: 10px; transition: transform 0.3s, box-shadow 0.3s; }
     .cluster:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
     .cluster h2 { color: #ffcc00; margin-bottom: 0.5rem; }
     .cluster p { font-size: 0.9rem; margin-bottom: 1rem; color: #ccc; }
-
+ 
     /* Map Buttons */
     .maps { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
     .map-button {
@@ -78,7 +296,7 @@
       background-color: #ffcc00;
       color: #000;
     }
-
+ 
     /* Notes Section */
     .notes {
       background-color: #222;
@@ -89,7 +307,7 @@
       color: #ccc;
       margin-top: 0.5rem;
     }
-
+ 
     /* Mods Section */
     .mods {
       background-color: #222;
@@ -103,10 +321,55 @@
     }
     .mods h3 { color: #ffcc00; margin-bottom: 0.5rem; }
     .mods ul { padding-left: 1.2rem; }
-
+ 
+    /* ── BattleMetrics Live Server Status ── */
+    .server-status {
+      max-width: 1200px;
+      margin: 2.5rem auto 0;
+      padding: 0 1rem 2rem;
+    }
+    .server-status > h2 {
+      text-align: center;
+      color: #ffcc00;
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      letter-spacing: 0.04em;
+    }
+    .status-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .status-cluster {
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+    }
+    .status-cluster h3 {
+      color: #ffcc00;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #333;
+      letter-spacing: 0.03em;
+    }
+    .banners {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+    .banners iframe {
+      max-width: 100%;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .status-grid { grid-template-columns: 1fr; }
+    }
+ 
     /* Footer */
     footer { text-align: center; padding: 1rem; margin-top: 2rem; color: #888; font-size: 0.85rem; }
-
+ 
     /* Responsive tweaks */
     @media (max-width: 500px) {
       .maps { flex-direction: column; }
@@ -115,22 +378,22 @@
   </style>
 </head>
 <body>
-
+ 
   <!-- Notification Banner -->
   <div class="notice-banner">
 <!--    Server names have been rebranded to "ZARKGaming.co.za" -->
   </div>
-
+ 
   <!-- Discord Link -->
   <header>
     <a href="https://discord.gg/TTf4zx9" target="_blank">Need help? Join our Community on Discord</a>
   </header>
-
+ 
   <main>
     <h1>ZARK Gaming® Clusters</h1>
-
+ 
     <div class="clusters">
-
+ 
       <!-- Cluster 1: Ark Survival Evolved -->
       <div class="cluster">
         <h2>Ark Survival Evolved (ASE) - Modded</h2>
@@ -138,7 +401,7 @@
         <p>Server Browser: <strong>ZARKGaming.co.za:12Map,x10,S+,Castles,Steampnk</strong></p>
         <p>Cluster Type: <strong>Modded</strong></p>
         <p>Rates: <strong>10x</strong></p>
-      	<p>Last Wipe: <strong>28 November 2025</strong></p>
+        <p>Last Wipe: <strong>28 November 2025</strong></p>
         <p>Active Event: <strong>Easter Event</strong></p>
         <div class="maps">
           <div class="map-button">Aberration</div>
@@ -177,7 +440,7 @@
           </ul>
         </div>
       </div>
-
+ 
       <!-- Cluster 2: Ark Survival Ascended Modded -->
       <div class="cluster">
         <h2>Ark Survival Ascended (ASA) - Modded</h2>
@@ -185,7 +448,7 @@
         <p>Server Browser: <strong>ZARKGaming.co.za: 'Map Name' / QoL Mods / x10 Rates</strong></p>
         <p>Cluster Type: <strong>Modded</strong></p>
         <p>Rates: <strong>10x</strong></p>
-      	<p>Last Wipe: <strong>1 September 2025</strong></p>
+        <p>Last Wipe: <strong>1 September 2025</strong></p>
         <p>Active Event: <strong>Easter Event</strong></p>
         <div class="maps">
           <div class="map-button">Aberration</div>
@@ -210,32 +473,32 @@
             <li>Cybers Structures QoL+</li>
             <li>Dragon's Kingdom</li>
             <li>Visual Storage</li>
-            <li>Castles, Keeps, and Forts - CKF</li>          
+            <li>Castles, Keeps, and Forts - CKF</li>
             <li>Additional Creatures Standalones: Cornusaurus</li>
             <li>Additions Ascended: Brachiosaurus</li>
             <li>Moros Tylosaurus</li>
             <li>Additional Creatures: Wild Ark</li>
-            <li>RR-Homedeco and more!</li>
+            <li>RR-Homedeko and more!</li>
             <li>Cyrus' Critters: Jumping Spider</li>
             <li>Cyrus's Critters: Redpanda</li>
             <li>Moro's Indomitable Duo</li>
             <li>Dino Depot</li>
             <li>Paleo ARK - Evolution | Apex Predators</li>
-            <li>S-Dino Variants</li>            
+            <li>S-Dino Variants</li>
             <li>Prehistoric Beasts Part V</li>
             <li>FPS Boost Buttons</li>
           </ul>
         </div>
       </div>
-
-      <!-- Cluster 3: Ark Survival Ascended Vanilla-->
+ 
+      <!-- Cluster 3: Ark Survival Ascended Vanilla -->
       <div class="cluster">
         <h2>Ark Survival Ascended (ASA) - Vanilla</h2>
         <p>Location: South Africa</p>
         <p>Server Browser: <strong>ZARKGaming.co.za: 'Map Name' / Vanilla / x3 Rates</strong></p>
         <p>Cluster Type: <strong>Vanilla-ish</strong></p>
         <p>Rates: <strong>3x</strong></p>
-      	<p>Last Wipe: <strong>28 November 2025</strong></p>
+        <p>Last Wipe: <strong>28 November 2025</strong></p>
         <p>Active Event: <strong>Easter Event</strong></p>
         <div class="maps">
           <div class="map-button">Aberration</div>
@@ -259,15 +522,15 @@
           </ul>
         </div>
       </div>
-		
-      <!-- Cluster 4: Ark Survival Evolved PvP Beta-->
+ 
+      <!-- Cluster 4: Ark Survival Evolved PvP Beta -->
       <div class="cluster">
         <h2>Ark Survival Evolved (ASE) - PVP (Beta)</h2>
         <p>Location: South Africa</p>
         <p>Server Browser: <strong>ZARKGaming.co.za: PvP | 10x | 12-Week Wipe</strong></p>
         <p>Cluster Type: <strong>PvP Beta - Modded</strong></p>
         <p>Rates: <strong>10x</strong></p>
-      	<p>Last Wipe: <strong>20 March 2025</strong></p>
+        <p>Last Wipe: <strong>20 March 2025</strong></p>
         <p>Active Event: <strong>Beta Testing</strong></p>
         <div class="maps">
           <div class="map-button">Fjordur</div>
@@ -285,19 +548,19 @@
           </ul>
         </div>
       </div>
-    
+ 
       <!-- Cluster 5: The Isle - Evrima -->
-	  <div class="cluster">
-  		<h2>The Isle: Evrima</h2>
-  		<p>Location: South Africa</p>
-  		<p>Server Browser: <strong>ZARKGaming.co.za: Serengeti Rift</strong></p>
-  		<p>Cluster Type: <strong>Vanilla</strong></p>
-  		<p>Rates: <strong>Standard</strong></p>
+      <div class="cluster">
+        <h2>The Isle: Evrima</h2>
+        <p>Location: South Africa</p>
+        <p>Server Browser: <strong>ZARKGaming.co.za: Serengeti Rift</strong></p>
+        <p>Cluster Type: <strong>Vanilla</strong></p>
+        <p>Rates: <strong>Standard</strong></p>
         <p>Last Wipe: <strong>17 January 2026</strong></p>
-  		<p>Active Event: <strong>None</strong></p>
-  		<div class="maps">
-		  <div class="map-button">Gateway</div>
-  		</div>
+        <p>Active Event: <strong>None</strong></p>
+        <div class="maps">
+          <div class="map-button">Gateway</div>
+        </div>
         <div class="notes">
           Enter the unforgiving world of The Isle: Evrima on ZARK Gaming's dedicated South African server. Survive as a growing dinosaur in a harsh open world where stealth, hunger, and instinct decide your fate. Whether you stalk prey as a carnivore or outsmart predators as a herbivore, every moment is a struggle for dominance and survival. No mods, no shortcuts-just raw, primal gameplay.
         </div>
@@ -308,12 +571,12 @@
           </ul>
         </div>
       </div>
-    
+ 
       <!-- Cluster 6: Insurgency Sandstorm -->
       <div class="cluster">
         <h2>Insurgency Sandstorm</h2>
         <p>Location: South Africa</p>
-        <p>Server Browser: <strong>ZARKGaming.co.za: Last Checkpoint</strong></p>      
+        <p>Server Browser: <strong>ZARKGaming.co.za: Last Checkpoint</strong></p>
         <div class="maps">
           <div class="map-button">Precinct</div>
           <div class="map-button">Ministry</div>
@@ -342,13 +605,95 @@
           </ul>
         </div>
       </div>
-    
+ 
     </div>
   </main>
-
+ 
+  <!-- ══════════════════════════════════════════════════════
+       BATTLEMETRICS LIVE SERVER STATUS
+       One script block handles resize for all iframes.
+  ════════════════════════════════════════════════════════ -->
+  <script type="application/javascript">
+    window.addEventListener('message', function(e) {
+      if (e.data.uid && e.data.type === 'sizeUpdate') {
+        var i = document.querySelector('iframe[name="' + e.data.uid + '"]');
+        if (i) {
+          i.style.width  = e.data.payload.width;
+          i.style.height = e.data.payload.height;
+        }
+      }
+    });
+  </script>
+ 
+  <section class="server-status">
+    <h2>Live Server Status</h2>
+ 
+    <div class="status-grid">
+ 
+    <!-- ── Ark Survival Evolved (ASE) — Modded ── -->
+    <div class="status-cluster">
+      <h3>Ark Survival Evolved (ASE) — Modded 10x</h3>
+      <div class="banners">
+        <!-- Aberration -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37741955.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="oqgaa"></iframe>
+        <!-- Crystal Isles -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37348625.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="vcevl"></iframe>
+        <!-- Extinction -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37385769.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="qibpw"></iframe>
+        <!-- Fjordur -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37364339.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="tsiyn"></iframe>
+        <!-- Genesis 1 -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37588386.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="cbqwk"></iframe>
+        <!-- Genesis 2 -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37347868.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="dnzrk"></iframe>
+        <!-- Ragnarok -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37348626.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="dbpit"></iframe>
+        <!-- Scorched Earth -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37580680.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="kwasm"></iframe>
+        <!-- The Center -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37407389.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gpctr"></iframe>
+        <!-- The Island -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37347870.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gdsvt"></iframe>
+        <!-- The Lost Island -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37411522.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="vlktl"></iframe>
+        <!-- Valguero -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37362369.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gqluh"></iframe>
+      </div>
+    </div>
+ 
+    <!-- ── Ark Survival Ascended (ASA) — Modded 10x ── -->
+    <div class="status-cluster">
+      <h3>Ark Survival Ascended (ASA) — Modded 10x</h3>
+      <div class="banners">
+        <!-- Aberration -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351913.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="npieb"></iframe>
+        <!-- Astraeos -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351912.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="jfjuu"></iframe>
+        <!-- Extinction -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351911.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="dlitg"></iframe>
+        <!-- Ragnarok -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351950.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="sveqd"></iframe>
+        <!-- Scorched Earth -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351949.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="lsrzx"></iframe>
+        <!-- The Center -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352016.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gotwl"></iframe>
+        <!-- The Island -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352019.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="fzhjh"></iframe>
+        <!-- Valguero -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352017.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="kujsb"></iframe>
+        <!-- Lost Colony -->
+        <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352053.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="otrxn"></iframe>
+      </div>
+    </div>
+ 
+    </div><!-- /.status-grid -->
+ 
+  </section>
+ 
   <footer>
     &copy; 2025 ZARK Gaming South Africa
   </footer>
-
+ 
 </body>
 </html>
+ 
