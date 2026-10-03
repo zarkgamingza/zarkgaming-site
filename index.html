@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,6 +12,11 @@
   <meta property="og:title" content="ZARK Gaming — Find your next world">
   <meta property="og:description" content="Find your crew and explore ZARK Gaming's South African ARK, The Isle, and Insurgency servers.">
   <meta property="og:image" content="https://www.zarkgaming.co.za/assets/zark-banner.png">
+  <meta property="og:url" content="https://www.zarkgaming.co.za/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZARK Gaming">
+
+  <!-- Twitter Card Metadata -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ZARK Gaming — Find your next world">
   <meta name="twitter:description" content="Find your crew and explore ZARK Gaming's South African ARK, The Isle, and Insurgency servers.">
@@ -21,52 +26,83 @@
   <meta name="description" content="Find your crew and explore ZARK Gaming's South African ARK, The Isle, and Insurgency servers.">
 
   <style>
-    :root{
-      --bg:#0b0b0d; --card:#121214; --muted:#bfc3c7; --accent:#ffcc00; --brand:#5865f2; --radius:12px;
-      --max-width:1100px; --gap:1rem;
+    /* Base Styles */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d0d0d; color: #f0f0f0; line-height: 1.6; }
+
+    /* Notification Banner */
+    .notice-banner {
+    /*  background-color: #ffcc00;
+      color: #000;
+      text-align: center;
+      padding: 0.7rem 1rem;
+      font-weight: bold;
+      font-size: 1rem;
+      animation: fadeIn 1.5s ease-in;*/
     }
-    *{box-sizing:border-box}
-    html { scroll-behavior: smooth; }
-    html,body{height:100%}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; margin:0; background:linear-gradient(180deg,#050506 0%, #0b0b0d 100%); color:#eef2f7; -webkit-font-smoothing:antialiased}
 
-    header{background:rgba(88,101,242,0.08);backdrop-filter:blur(4px);padding:1rem;border-bottom:1px solid rgba(255,255,255,0.03)}
-    .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
-    .brand{display:flex;gap:1rem;align-items:center}
-    .brand img{height:44px}
-    .brand h1{font-size:1.1rem;margin:0;color:var(--accent)}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    .hero{display:grid;grid-template-columns:1fr 320px;gap:1.25rem;align-items:start;margin:1.25rem 0}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:1.1rem;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.03)}
-    .hero h2{color:var(--accent);margin:0 0 .5rem}
-    .lead{color:var(--muted);margin-bottom:1rem}
-    .cta-group{display:flex;gap:.75rem;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.6rem .9rem;border-radius:8px;background:var(--brand);color:#fff;text-decoration:none;font-weight:600;border:0}
-    .btn.secondary{background:#222;color:var(--muted)}
+    /* Header */
+    header { background-color: #5865f2; padding: 1rem; text-align: center; font-size: 1.2rem; }
+    header a { color: #fff; font-weight: bold; transition: 0.3s; }
+    header a:hover { color: #ffcc00; }
 
-    nav.quicklinks{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem}
-    nav.quicklinks a{font-size:.9rem;color:var(--muted);text-decoration:none;padding:.35rem .6rem;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02)}
+    /* Main Layout */
+    main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: #ffcc00; }
 
-    main{padding-bottom:2rem}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--gap)}
-    .card{background:var(--card);padding:1rem;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-    .card h3{margin:0 0 .35rem;color:var(--accent)}
-    .meta{color:var(--muted);font-size:.95rem;margin-bottom:.6rem}
-    .maps{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem}
-    .chip{background:rgba(255,255,255,0.025);padding:.3rem .55rem;border-radius:999px;font-size:.85rem;color:var(--muted)}
+    /* Cluster Cards */
+    .clusters { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .cluster { background-color: #1a1a1a; padding: 1rem; border-radius: 10px; transition: transform 0.3s, box-shadow 0.3s; }
+    .cluster:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+    .cluster h2 { color: #ffcc00; margin-bottom: 0.5rem; }
+    .cluster p { font-size: 0.9rem; margin-bottom: 1rem; color: #ccc; }
 
-    .notes{background:linear-gradient(90deg, rgba(255,204,0,0.04), rgba(255,255,255,0.01));padding:.75rem;border-radius:8px;color:var(--muted);font-size:.95rem}
+    /* Map Buttons */
+    .maps { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .map-button {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #5865f2;
+      color: #fff;
+      border-radius: 5px;
+      transition: 0.3s;
+      cursor: default;
+      user-select: none;
+    }
+    .map-button:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
 
-    .status{margin-top:1.25rem}
-    .status h4{color:var(--accent);margin-bottom:.75rem}
-    .iframes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.6rem}
-    iframe{width:100%;height:80px;border:0;background:transparent}
+    /* Notes Section */
+    .notes {
+      background-color: #222;
+      padding: 0.8rem 1rem;
+      border-left: 4px solid #ffcc00;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-top: 0.5rem;
+    }
 
-    footer{padding:1rem 0;text-align:center;color:#8b95a0;font-size:.9rem;border-top:1px solid rgba(255,255,255,0.02);margin-top:2rem}
-
-    /* small screens */
-    @media (max-width:840px){.hero{grid-template-columns:1fr}}
-    @media (max-width:520px){.brand h1{font-size:1rem}}
+    /* Mods Section */
+    .mods {
+      background-color: #222;
+      padding: 0.8rem 1rem;
+      border-left: 4px solid #ffcc00;
+      border-radius: 5px;
+      color: #ccc;
+      margin-top: 0.5rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .mods h3 { color: #ffcc00; margin-bottom: 0.5rem; }
+    .mods ul { padding-left: 1.2rem; }
 
     /* Footer */
     footer { text-align: center; padding: 1rem; margin-top: 2rem; color: #888; font-size: 0.85rem; }
@@ -405,13 +441,22 @@
           <h3>Mods</h3>
           <ul>
             <li>Structures Plus (S+)</li>
-            <li>Castles, Keeps and Forts</li>
+            <li>Castles, Keeps, and Forts Remastered</li>
             <li>Ark Steampunk Mod</li>
-            <li>SpyGlass / Super Spyglass</li>
-            <li>Visual Storage / Dino Storage</li>
-            <li>Performance & QoL: FPS Boost Buttons, Crafting Skill Potion</li>
+            <li>Dino Storage v2</li>
+            <li>Snap Fixer Plus</li>
+            <li>Custom Dino Levels</li>
+            <li>Awesome SpyGlass!</li>
+            <li>Lethals Reusables</li>
+            <li>Naj's Speedy Flyers</li>
+            <li>eco's Garden Decor</li>
+            <li>eco's RP Decor</li>
+            <li>eco Trees</li>
+            <li>eco's Chibi Displays</li>
+            <li>RR-HomeDeko and more!</li>
           </ul>
         </div>
+      </div>
 
       <!-- Cluster 2: Ark Survival Ascended Modded -->
       <div class="cluster">
@@ -463,7 +508,6 @@
           </ul>
         </div>
       </div>
-    </section>
 
       <!-- Cluster 3: Ark Survival Ascended Vanilla -->
       <div class="cluster">
@@ -496,9 +540,7 @@
             <li>Dino Depot</li>
           </ul>
         </div>
-        <p class="small muted" style="margin-top:.75rem">If an embed fails to load, check our Discord for outage reports or direct IPs.</p>
       </div>
-    </section>
 
       <!-- Cluster 4: The Isle - Evrima -->
       <div class="cluster">
