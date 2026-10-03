@@ -1,301 +1,623 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ZARK Gaming — Join our servers & Discord</title>
-  <link rel="icon" href="/assets/favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZARK Gaming — Find your next world</title>
 
-  <!-- Social / Embed -->
-  <meta property="og:title" content="ZARK Gaming Clusters">
-  <meta property="og:description" content="ZARK Gaming hosts ARK Ascended, ARK Evolved, The Isle and Insurgency Sandstorm — South Africa-based servers.">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/assets/favicon.png?v=2">
+
+  <!-- Open Graph / Discord / Social Embed Metadata -->
+  <meta property="og:title" content="ZARK Gaming — Find your next world">
+  <meta property="og:description" content="Find your crew and explore ZARK Gaming's South African ARK, The Isle, and Insurgency servers.">
   <meta property="og:image" content="https://www.zarkgaming.co.za/assets/zark-banner.png">
+  <meta property="og:url" content="https://www.zarkgaming.co.za/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZARK Gaming">
+
+  <!-- Twitter Card Metadata -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZARK Gaming — Find your next world">
+  <meta name="twitter:description" content="Find your crew and explore ZARK Gaming's South African ARK, The Isle, and Insurgency servers.">
+  <meta name="twitter:image" content="https://www.zarkgaming.co.za/assets/zark-banner.png">
+
+  <!-- Fallback Meta -->
+  <meta name="description" content="Find your crew and explore ZARK Gaming's South African ARK, The Isle, and Insurgency servers.">
 
   <style>
-    :root{
-      --bg:#0b0b0d; --card:#121214; --muted:#bfc3c7; --accent:#ffcc00; --brand:#5865f2; --radius:12px;
-      --max-width:1100px; --gap:1rem;
+    /* Base Styles */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d0d0d; color: #f0f0f0; line-height: 1.6; }
+
+    /* Notification Banner */
+    .notice-banner {
+    /*  background-color: #ffcc00;
+      color: #000;
+      text-align: center;
+      padding: 0.7rem 1rem;
+      font-weight: bold;
+      font-size: 1rem;
+      animation: fadeIn 1.5s ease-in;*/
     }
-    *{box-sizing:border-box}
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    header { background-color: #5865f2; padding: 1rem; text-align: center; font-size: 1.2rem; }
+    header a { color: #fff; font-weight: bold; transition: 0.3s; }
+    header a:hover { color: #ffcc00; }
+
+    /* Main Layout */
+    main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { text-align: center; margin-bottom: 2rem; font-size: 2rem; color: #ffcc00; }
+
+    /* Cluster Cards */
+    .clusters { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .cluster { background-color: #1a1a1a; padding: 1rem; border-radius: 10px; transition: transform 0.3s, box-shadow 0.3s; }
+    .cluster:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+    .cluster h2 { color: #ffcc00; margin-bottom: 0.5rem; }
+    .cluster p { font-size: 0.9rem; margin-bottom: 1rem; color: #ccc; }
+
+    /* Map Buttons */
+    .maps { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .map-button {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #5865f2;
+      color: #fff;
+      border-radius: 5px;
+      transition: 0.3s;
+      cursor: default;
+      user-select: none;
+    }
+    .map-button:hover {
+      background-color: #ffcc00;
+      color: #000;
+    }
+
+    /* Notes Section */
+    .notes {
+      background-color: #222;
+      padding: 0.8rem 1rem;
+      border-left: 4px solid #ffcc00;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-top: 0.5rem;
+    }
+
+    /* Mods Section */
+    .mods {
+      background-color: #222;
+      padding: 0.8rem 1rem;
+      border-left: 4px solid #ffcc00;
+      border-radius: 5px;
+      color: #ccc;
+      margin-top: 0.5rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .mods h3 { color: #ffcc00; margin-bottom: 0.5rem; }
+    .mods ul { padding-left: 1.2rem; }
+
+    /* Footer */
+    footer { text-align: center; padding: 1rem; margin-top: 2rem; color: #888; font-size: 0.85rem; }
+
+    /* Responsive tweaks */
+    @media (max-width: 500px) {
+      .maps { flex-direction: column; }
+      .map-button { width: 100%; text-align: center; }
+    }
+
+    :root {
+      color-scheme: dark;
+      --bg: #080a12;
+      --bg-elevated: #0e1220;
+      --surface: #121729;
+      --surface-soft: #191f35;
+      --border: #2d3654;
+      --border-strong: #485578;
+      --text: #f0f2fb;
+      --muted: #a0aac5;
+      --soft: #c1c8dd;
+      --accent: #a78bfa;
+      --accent-hover: #8b5cf6;
+      --accent-soft: rgba(167, 139, 250, 0.15);
+      --accent-fg: #100d1b;
+      --link: #60a5fa;
+      --overlay: rgba(18, 23, 41, 0.9);
+    }
     html { scroll-behavior: smooth; }
-    html,body{height:100%}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; margin:0; background:linear-gradient(180deg,#050506 0%, #0b0b0d 100%); color:#eef2f7; -webkit-font-smoothing:antialiased}
-
-    header{background:rgba(88,101,242,0.08);backdrop-filter:blur(4px);padding:1rem;border-bottom:1px solid rgba(255,255,255,0.03)}
-    .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
-    .brand{display:flex;gap:1rem;align-items:center}
-    .brand img{height:44px}
-    .brand h1{font-size:1.1rem;margin:0;color:var(--accent)}
-
-    .hero{display:grid;grid-template-columns:1fr 320px;gap:1.25rem;align-items:start;margin:1.25rem 0}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:1.1rem;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.03)}
-    .hero h2{color:var(--accent);margin:0 0 .5rem}
-    .lead{color:var(--muted);margin-bottom:1rem}
-    .cta-group{display:flex;gap:.75rem;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.6rem .9rem;border-radius:8px;background:var(--brand);color:#fff;text-decoration:none;font-weight:600;border:0}
-    .btn.secondary{background:#222;color:var(--muted)}
-
-    nav.quicklinks{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem}
-    nav.quicklinks a{font-size:.9rem;color:var(--muted);text-decoration:none;padding:.35rem .6rem;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02)}
-
-    main{padding-bottom:2rem}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--gap)}
-    .card{background:var(--card);padding:1rem;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-    .card h3{margin:0 0 .35rem;color:var(--accent)}
-    .meta{color:var(--muted);font-size:.95rem;margin-bottom:.6rem}
-    .maps{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem}
-    .chip{background:rgba(255,255,255,0.025);padding:.3rem .55rem;border-radius:999px;font-size:.85rem;color:var(--muted)}
-
-    .notes{background:linear-gradient(90deg, rgba(255,204,0,0.04), rgba(255,255,255,0.01));padding:.75rem;border-radius:8px;color:var(--muted);font-size:.95rem}
-
-    .status{margin-top:1.25rem}
-    .status h4{color:var(--accent);margin-bottom:.75rem}
-    .iframes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.6rem}
-    iframe{width:100%;height:80px;border:0;background:transparent}
-
-    footer{padding:1rem 0;text-align:center;color:#8b95a0;font-size:.9rem;border-top:1px solid rgba(255,255,255,0.02);margin-top:2rem}
-
-    /* small screens */
-    @media (max-width:840px){.hero{grid-template-columns:1fr}}
-    @media (max-width:520px){.brand h1{font-size:1rem}}
-
-    /* utility */
-    .muted{color:var(--muted)}
-    .small{font-size:.85rem}
+    body { background: var(--bg); color: var(--text); }
+    a { text-decoration: none; }
+    header {
+      position: sticky; top: 0; z-index: 10; height: 68px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      padding: 0 max(20px, calc((100% - 1160px) / 2));
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 10, 18, 0.96);
+      backdrop-filter: blur(14px);
+      text-align: left; font-size: 1rem;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-weight: 900; letter-spacing: .08em; }
+    .brand img { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; }
+    .nav-links { display: flex; align-items: center; gap: 26px; color: var(--muted); font-size: .9rem; }
+    .nav-links a:hover, .discord-cta:hover { color: var(--accent); }
+    .discord-cta, .button {
+      display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 9px;
+      padding: 0 18px; border: 1px solid transparent; border-radius: 10px;
+      background: var(--accent); color: var(--accent-fg); font-weight: 750;
+      transition: background .18s ease, transform .18s ease;
+    }
+    .discord-cta:hover, .button:hover { transform: translateY(-1px); background: var(--accent-hover); color: var(--accent-fg); }
+    main { max-width: none; margin: 0 auto; padding: 0; }
+    .hero {
+      position: relative; display: flex; align-items: center; min-height: 540px; overflow: hidden;
+      background: var(--bg-elevated) url("/assets/zark-banner.png") center 38% / cover no-repeat;
+      isolation: isolate;
+    }
+    .hero::before {
+      position: absolute; z-index: -1; inset: 0; content: "";
+      background: linear-gradient(90deg, var(--bg) 0%, var(--bg-elevated) 31%, var(--overlay) 69%, transparent 100%);
+      box-shadow: inset 0 0 150px rgba(96, 165, 250, .14);
+    }
+    .hero::after {
+      position: absolute; z-index: -1; inset: 0; content: "";
+      background: linear-gradient(0deg, var(--bg) 0%, transparent 30%);
+    }
+    .hero-inner { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+    .hero-copy { width: min(620px, 64%); padding: 78px 0 96px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; margin: 0 0 18px;
+      color: var(--accent); font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+    }
+    .eyebrow::before { width: 22px; height: 2px; background: currentColor; content: ""; }
+    h1 { max-width: 650px; margin: 0; text-align: left; color: var(--text); font-size: clamp(2.8rem, 6.2vw, 5.3rem); line-height: .98; letter-spacing: -.055em; }
+    h1 span { color: var(--accent); }
+    .hero-copy > p:not(.eyebrow) { max-width: 500px; margin: 22px 0 27px; color: var(--muted); font-size: 1.1rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button.secondary { border-color: var(--border-strong); background: rgba(18, 23, 41, .82); color: var(--text); }
+    .button.secondary:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
+    .hero-proof { display: flex; gap: 22px; margin-top: 34px; color: var(--muted); font-size: .86rem; }
+    .hero-proof strong { display: block; color: var(--text); font-size: 1rem; }
+    .section { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 58px 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+    .section-head h2, .community h2 { margin: 0; font-size: clamp(1.7rem, 3vw, 2.3rem); letter-spacing: -.04em; }
+    .section-head p:not(.eyebrow) { margin: 6px 0 0; color: var(--muted); }
+    .text-link { color: var(--accent); font-weight: 700; }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .filter {
+      padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px;
+      background: var(--surface-soft); color: var(--muted); cursor: pointer; font-size: .85rem; font-weight: 700;
+    }
+    .filter[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-fg); }
+    .server-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .server-card {
+      display: flex; min-height: 270px; flex-direction: column; padding: 21px;
+      border: 1px solid var(--border); border-radius: 16px;
+      background: linear-gradient(145deg, var(--surface-soft), var(--surface) 58%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035);
+      transition: border-color .18s ease, transform .18s ease;
+    }
+    .server-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .game-label { color: var(--muted); font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .mode { padding: 5px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .72rem; font-weight: 800; }
+    .server-card h3 { margin: 15px 0 5px; color: var(--text); font-size: 1.25rem; letter-spacing: -.025em; }
+    .server-card .summary { margin: 0; color: var(--muted); font-size: .9rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 17px 0; }
+    .tag { padding: 5px 9px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-elevated); color: var(--soft); font-size: .75rem; }
+    .join-details { margin-top: auto; padding-top: 14px; }
+    .join-details summary { color: var(--accent); cursor: pointer; font-size: .88rem; font-weight: 750; }
+    .join-details summary:hover { color: var(--accent-hover); }
+    .join-details p { margin: 10px 0 5px; color: var(--muted); font-size: .78rem; }
+    .join-details code {
+      display: block; overflow-wrap: anywhere; padding: 9px 10px;
+      border: 1px solid var(--border); border-radius: 10px; background: var(--bg-elevated);
+      color: var(--text); font-family: Consolas, "Courier New", Courier, monospace; font-size: .78rem;
+    }
+    .join-details .discord-help { display: inline-block; margin-top: 8px; color: var(--muted); font-size: .78rem; }
+    .join-details .discord-help:hover { color: var(--accent); }
+    .community {
+      display: grid; grid-template-columns: 1.2fr .8fr; gap: 30px; align-items: center;
+      padding: clamp(26px, 5vw, 48px); border: 1px solid var(--border); border-radius: 16px;
+      background: linear-gradient(130deg, var(--surface-soft), var(--surface) 62%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035);
+    }
+    .community h2 { max-width: 560px; font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.08; }
+    .community p { max-width: 560px; margin: 14px 0 22px; color: var(--muted); }
+    .community-side { display: grid; gap: 10px; }
+    .community-item { display: flex; align-items: center; gap: 13px; padding: 13px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-elevated); }
+    .community-icon { display: grid; width: 38px; height: 38px; flex: 0 0 auto; place-items: center; border-radius: 10px; background: var(--accent-soft); color: var(--accent); font-weight: 900; }
+    .community-item strong, .community-item small { display: block; }
+    .community-item small { margin-top: 2px; color: var(--muted); }
+    .legacy-details { margin: 0 auto 48px; width: min(1160px, calc(100% - 40px)); border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+    .legacy-details > summary { padding: 16px 20px; color: var(--accent); cursor: pointer; font-weight: 750; }
+    .legacy-details > .clusters { padding: 0 20px 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .cluster { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); color: var(--text); }
+    .cluster h2, .mods h3 { color: var(--accent); }
+    .cluster p, .notes, .mods { color: var(--muted); }
+    .cluster p strong, .notes strong { color: var(--text); }
+    .notes, .mods { border-color: var(--accent); background: var(--surface-soft); border-radius: 10px; }
+    .map-button { border: 1px solid var(--border); background: var(--surface-soft); color: var(--soft); border-radius: 10px; }
+    .map-button:hover { border-color: var(--accent); background: var(--accent); color: var(--accent-fg); }
+    footer { margin-top: 0; padding: 26px 20px; border-top: 1px solid var(--border); color: var(--muted); }
+    :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .hero { min-height: 520px; background-position: 62% center; }
+      .hero::before { background: linear-gradient(90deg, var(--bg) 0%, var(--overlay) 55%, transparent 100%); }
+      .hero-copy { width: min(580px, 82%); }
+      .server-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .community { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      header { height: 60px; padding: 0 14px; }
+      .brand span { font-size: .82rem; }
+      .discord-cta { min-height: 39px; padding: 0 12px; font-size: .8rem; }
+      .hero { min-height: 590px; align-items: end; background-position: 60% top; background-size: auto 72%; }
+      .hero::before { background: linear-gradient(0deg, var(--bg) 6%, var(--overlay) 58%, transparent 100%); }
+      .hero::after { background: none; }
+      .hero-inner, .section, .legacy-details { width: calc(100% - 28px); }
+      .hero-copy { width: 100%; padding: 260px 0 42px; }
+      h1 { font-size: clamp(2.75rem, 14vw, 4.2rem); }
+      .hero-copy > p:not(.eyebrow) { font-size: 1rem; }
+      .hero-proof { gap: 16px; font-size: .78rem; }
+      .section { padding: 40px 0; }
+      .section-head { align-items: start; flex-direction: column; gap: 12px; }
+      .server-grid { grid-template-columns: 1fr; }
+      .server-card { min-height: 238px; }
+      .community { padding: 24px 18px; }
+      .legacy-details > .clusters { padding: 0 12px 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
+
   <header>
-    <div class="container brand">
-      <img src="assets/zark-banner.png" alt="ZARK Gaming banner" />
-      <div>
-        <h1>ZARK Gaming</h1>
-        <div class="small muted">South Africa • ARK Ascended • ARK Evolved • The Isle • Insurgency</div>
-      </div>
-      <div style="margin-left:auto;display:flex;gap:.5rem;align-items:center">
-        <a class="btn" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener">Join Discord</a>
-        <a class="btn secondary" href="#servers">Server List</a>
-      </div>
-    </div>
+    <a class="brand" href="/" aria-label="ZARK Gaming home">
+      <img src="/assets/favicon.png" alt="">
+      <span>ZARK GAMING</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#servers">Servers</a>
+      <a href="#community">Community</a>
+    </nav>
+    <a class="discord-cta" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Join Discord <span aria-hidden="true">↗</span></a>
   </header>
 
-  <main class="container">
+  <main>
     <section class="hero">
-      <div class="hero-card">
-        <h2>South African Servers</h2>
-        <p class="lead">ZARK Gaming hosts multiple clusters for ARK Survival Evolved, ARK Survival Ascended, The Isle and Insurgency Sandstorm. Friendly community, active admins, and regular events.</p>
-
-        <div class="cta-group">
-          <a class="btn" href="https://zarkgaming.co.za/discord" target="_blank">Join Discord</a>
-          <a class="btn secondary" href="#how-to-join">How to join</a>
-          <a class="btn secondary" href="#status">Live Status</a>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">South African servers · Good people · Big worlds</p>
+          <h1>Find your<br>next <span>world.</span></h1>
+          <p>From wild ARK frontiers to tactical co-op, find your crew and make the server yours.</p>
+          <div class="hero-actions">
+            <a class="button" href="#servers">Explore servers <span aria-hidden="true">↓</span></a>
+            <a class="button secondary" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Meet us on Discord <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="hero-proof" aria-label="Community overview">
+            <div><strong>5</strong> game worlds</div>
+            <div><strong>South Africa</strong> local community</div>
+            <div><strong>Find your fit</strong> PvE to PvP</div>
+          </div>
         </div>
-
-        <nav class="quicklinks">
-          <a href="#servers">Servers</a>
-          <a href="#mods">Mods</a>
-          <a href="#status">Live Status</a>
-        </nav>
       </div>
-
-      <aside class="hero-card small">
-        <h3 class="muted">Server Tips</h3>
-        <ol style="margin:.5rem 0 0 1rem" class="small muted">
-          <li>Check the Discord for whitelist or branch instructions.</li>
-          <li>For ARK: use the Server Browser text filter — copy the server browser string shown on each cluster card.</li>
-          <li>Mods: subscribe via Steam Workshop (mod list shown on each cluster).</li>
-          <li>If you experience high ping, try switching to an official map or report on Discord.</li>
-        </ol>
-      </aside>
     </section>
 
-    <section id="servers">
-      <h2 style="color:var(--accent);margin-bottom:.75rem">Clusters & How to Join</h2>
-
-      <div class="grid">
-        <!-- ASE Modded -->
-        <article class="card">
-          <h3>Ark Survival Evolved (ASE) — Modded</h3>
-          <div class="meta">Location: South Africa • Rates: 10x • Cluster: Modded</div>
-          <div class="small muted">Server Browser filter: <strong>ZARKGaming.co.za:12Map,x10,S+,Castles,Steampnk</strong></div>
-
-          <div class="maps" aria-hidden="false">
-            <span class="chip">Aberration</span>
-            <span class="chip">Crystal Isles</span>
-            <span class="chip">Extinction</span>
-            <span class="chip">Fjordur</span>
-            <span class="chip">Genesis 1</span>
-            <span class="chip">Genesis 2</span>
-            <span class="chip">Lost Island</span>
-            <span class="chip">Ragnarok</span>
-            <span class="chip">Scorched Earth</span>
-            <span class="chip">The Center</span>
-            <span class="chip">The Island</span>
-            <span class="chip">Valguero</span>
-          </div>
-
-          <div class="notes small muted">Join via the server browser string above or ask on Discord for direct IPs. Mods include S+, Castles, Steampunk and QoL plugins. Last wipe: 28 Nov 2025.</div>
-        </article>
-
-        <!-- ASA Modded -->
-        <article class="card">
-          <h3>Ark Survival Ascended (ASA) — Modded</h3>
-          <div class="meta">Location: South Africa • Rates: 10x • Cluster: Modded</div>
-          <div class="small muted">Server Browser filter: <strong>ZARKGaming.co.za: 'Map Name' / QoL Mods / x10 Rates</strong></div>
-          <div class="maps">
-            <span class="chip">Aberration</span>
-            <span class="chip">Astraeos</span>
-            <span class="chip">Extinction</span>
-            <span class="chip">Genesis 1</span>
-            <span class="chip">Lost Colony</span>
-            <span class="chip">Ragnarok</span>
-            <span class="chip">Scorched Earth</span>
-            <span class="chip">The Center</span>
-            <span class="chip">The Island</span>
-            <span class="chip">Valguero</span>
-          </div>
-          <div class="notes small muted">Astraeos is a paid DLC map — check Discord for joining advice and mod install steps. Last wipe: 1 Sep 2025.</div>
-        </article>
-
-        <!-- ASA Vanilla -->
-        <article class="card">
-          <h3>Ark Survival Ascended (ASA) — Vanilla</h3>
-          <div class="meta">Location: South Africa • Rates: 3x • Cluster: Vanilla-ish</div>
-          <div class="maps">
-            <span class="chip">Aberration</span>
-            <span class="chip">Astraeos</span>
-            <span class="chip">Extinction</span>
-            <span class="chip">Genesis 1</span>
-            <span class="chip">Ragnarok</span>
-            <span class="chip">Scorched Earth</span>
-            <span class="chip">The Center</span>
-            <span class="chip">The Island</span>
-            <span class="chip">Valguero</span>
-          </div>
-          <div class="notes small muted">Clean experience with minimal mods to improve performance. Last wipe: 28 Nov 2025.</div>
-        </article>
-
-        <!-- The Isle -->
-        <article class="card">
-          <h3>The Isle: Evrima</h3>
-          <div class="meta">Location: South Africa • Rates: Standard • Cluster: Vanilla</div>
-          <div class="maps"><span class="chip">Gateway</span></div>
-          <div class="notes small muted">Grow from hatchling to apex; server is unmodded for pure survival.</div>
-        </article>
-
-        <!-- Insurgency -->
-        <article class="card">
-          <h3>Insurgency: Sandstorm</h3>
-          <div class="meta">Location: South Africa • Mode: Checkpoint • 20v40 AI</div>
-          <div class="maps"><span class="chip">Precinct</span><span class="chip">Ministry</span><span class="chip">Crossing</span></div>
-          <div class="notes small muted">Tactical co-op action with dedicated admins and scheduled events. Join via the community Discord for patrol times.</div>
-        </article>
-
+    <section class="section" id="servers">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Choose your adventure</p>
+          <h2>Your next server is here.</h2>
+          <p>Pick a world, check the details, and get your crew together.</p>
+        </div>
+        <a class="text-link" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Need a hand? Ask the community ↗</a>
       </div>
-
-      <div id="how-to-join" style="margin-top:1rem" class="card">
-        <h3>How to join (quick)</h3>
-        <ol style="margin-left:1rem;color:var(--muted)">
-          <li>Open your game's Server Browser (or Steam server browser).</li>
-          <li>Paste the server browser filter string from the cluster card into the search box.</li>
-          <li>Subscribe to the required Steam Workshop mods, then restart the game if needed.</li>
-          <li>If a map requires branch switching, follow the pinned Discord guide or ask in #support.</li>
-        </ol>
-        <p class="small muted">Need help? Click <a href="https://zarkgaming.co.za/discord" target="_blank" class="muted">Join Discord</a> and ping an admin in #support.</p>
+      <div class="filters" role="group" aria-label="Filter servers by game">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true">All servers</button>
+        <button class="filter" type="button" data-filter="ark" aria-pressed="false">ARK</button>
+        <button class="filter" type="button" data-filter="other" aria-pressed="false">Other games</button>
       </div>
-
+      <div class="server-grid">
+        <article class="server-card" data-game="ark">
+          <div class="card-top"><span class="game-label">ARK: Survival Evolved</span><span class="mode">MODDED</span></div>
+          <h3>ASE · The big adventure</h3>
+          <p class="summary">A sprawling map cluster, creature collecting, and room to build your legacy.</p>
+          <div class="tags"><span class="tag">PvE</span><span class="tag">12 maps</span><span class="tag">South Africa</span></div>
+          <details class="join-details">
+            <summary>How to find &amp; join</summary>
+            <p>Search for "ZARKGaming" in the local server browser</p>
+            <code>ZARKGaming.co.za:12Map,x10,S+,Castles,Steampnk</code>
+            <a class="discord-help" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Need help? Ask on Discord ↗</a>
+          </details>
+        </article>
+        <article class="server-card" data-game="ark">
+          <div class="card-top"><span class="game-label">ARK: Survival Ascended</span><span class="mode">MODDED</span></div>
+          <h3>ASA · Build beyond</h3>
+          <p class="summary">Fresh maps, quality-of-life mods, and a world built for curious survivors.</p>
+          <div class="tags"><span class="tag">PvE</span><span class="tag">10 maps</span><span class="tag">South Africa</span></div>
+          <details class="join-details">
+            <summary>How to find &amp; join</summary>
+            <p>Search for "ZARKGaming" in the local server browser</p>
+            <code>ZARKGaming.co.za: 'Map Name' / QoL Mods / x10 Rates</code>
+            <a class="discord-help" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Need help? Ask on Discord ↗</a>
+          </details>
+        </article>
+        <article class="server-card" data-game="ark">
+          <div class="card-top"><span class="game-label">ARK: Survival Ascended</span><span class="mode">VANILLA-ISH</span></div>
+          <h3>ASA · The classic feel</h3>
+          <p class="summary">A cleaner survival experience with familiar maps and a little breathing room.</p>
+          <div class="tags"><span class="tag">PvE</span><span class="tag">10 maps</span><span class="tag">South Africa</span></div>
+          <details class="join-details">
+            <summary>How to find &amp; join</summary>
+            <p>Search for "ZARKGaming" in the local server browser</p>
+            <code>ZARKGaming.co.za: 'Map Name' / Vanilla / x3 Rates</code>
+            <a class="discord-help" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Need help? Ask on Discord ↗</a>
+          </details>
+        </article>
+        <article class="server-card" data-game="other">
+          <div class="card-top"><span class="game-label">The Isle: Evrima</span><span class="mode">PVP</span></div>
+          <h3>The Isle · Wild instincts</h3>
+          <p class="summary">Grow from hatchling to apex in a world where every encounter matters.</p>
+          <div class="tags"><span class="tag">Gateway</span><span class="tag">Unmodded</span><span class="tag">South Africa</span></div>
+          <details class="join-details">
+            <summary>How to find &amp; join</summary>
+            <p>Search for "ZARKGaming" in the local server browser</p>
+            <code>ZARKGaming.co.za: Serengeti Rift</code>
+            <a class="discord-help" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Need help? Ask on Discord ↗</a>
+          </details>
+        </article>
+        <article class="server-card" data-game="other">
+          <div class="card-top"><span class="game-label">Insurgency: Sandstorm</span><span class="mode">CO-OP</span></div>
+          <h3>Insurgency · Hold the line</h3>
+          <p class="summary">Get your squad together for tactical co-op and the next checkpoint.</p>
+          <div class="tags"><span class="tag">Checkpoint</span><span class="tag">Up to 20 players</span><span class="tag">South Africa</span></div>
+          <details class="join-details">
+            <summary>How to find &amp; join</summary>
+            <p>Search for "ZARKGaming" in the local server browser</p>
+            <code>ZARKGaming.co.za: Last Checkpoint</code>
+            <a class="discord-help" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Need help? Ask on Discord ↗</a>
+          </details>
+        </article>
+      </div>
     </section>
 
-    <section id="mods" style="margin-top:1rem">
-      <h2 style="color:var(--accent)">Common Mods</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>ASE / ASA — Common Mod List</h3>
-          <ul class="muted small">
+    <section class="section" id="community">
+      <div class="community">
+        <div>
+          <p class="eyebrow">The best part is the people</p>
+          <h2>Good games start with a good crew.</h2>
+          <p>Get server help, catch community news, and find people to play with. Join the ZARK Discord and we’ll help you get set up.</p>
+          <a class="button" href="https://zarkgaming.co.za/discord" target="_blank" rel="noopener noreferrer">Join the ZARK Discord <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="community-side">
+          <div class="community-item"><span class="community-icon" aria-hidden="true">01</span><span><strong>Find your server</strong><small>Get help choosing a play style</small></span></div>
+          <div class="community-item"><span class="community-icon" aria-hidden="true">02</span><span><strong>Get set up</strong><small>Join instructions and mod advice</small></span></div>
+          <div class="community-item"><span class="community-icon" aria-hidden="true">03</span><span><strong>Stay in the loop</strong><small>News, events, and community chat</small></span></div>
+        </div>
+      </div>
+    </section>
+
+    <details class="legacy-details">
+      <summary>Full maps, mods and server details</summary>
+    <div class="clusters">
+
+      <!-- Cluster 1: Ark Survival Evolved -->
+      <div class="cluster">
+        <h2>Ark Survival Evolved (ASE) - Modded</h2>
+        <p>Location: South Africa</p>
+        <p>Server Browser: <strong>ZARKGaming.co.za:12Map,x10,S+,Castles,Steampnk</strong></p>
+        <p>Cluster Type: <strong>Modded</strong></p>
+        <p>Rates: <strong>10x</strong></p>
+        <p>Wipe schedule: <strong>Check Discord for current details</strong></p>
+        <p>Events: <strong>Check Discord for updates</strong></p>
+        <div class="maps">
+          <div class="map-button">Aberration</div>
+          <div class="map-button">Crystal Isles</div>
+          <div class="map-button">Extinction</div>
+          <div class="map-button">Fjordur</div>
+          <div class="map-button">Genesis 1</div>
+          <div class="map-button">Genesis 2</div>
+          <div class="map-button">Ragnarok</div>
+          <div class="map-button">Scorched Earth</div>
+          <div class="map-button">The Center</div>
+          <div class="map-button">The Island</div>
+          <div class="map-button">The Lost Island</div>
+          <div class="map-button">Valguero</div>
+        </div>
+        <div class="notes">
+          Survive, tame, and conquer across ZARK Gaming's ARK cluster, running the <strong>pre-Aquatica</strong> branch (jump into our Discord to learn how to switch). Explore all available maps, build your legacy, and take on every boss the ARK has to offer. Want to dive into Aquatica? No branch switch needed - just jump in and start your adventure. Perfect for tamers, raiders, and explorers alike.
+        </div>
+        <div class="mods">
+          <h3>Mods</h3>
+          <ul>
             <li>Structures Plus (S+)</li>
-            <li>Castles, Keeps and Forts</li>
+            <li>Castles, Keeps, and Forts Remastered</li>
             <li>Ark Steampunk Mod</li>
-            <li>SpyGlass / Super Spyglass</li>
-            <li>Visual Storage / Dino Storage</li>
-            <li>Performance & QoL: FPS Boost Buttons, Crafting Skill Potion</li>
+            <li>Dino Storage v2</li>
+            <li>Snap Fixer Plus</li>
+            <li>Custom Dino Levels</li>
+            <li>Awesome SpyGlass!</li>
+            <li>Lethals Reusables</li>
+            <li>Naj's Speedy Flyers</li>
+            <li>eco's Garden Decor</li>
+            <li>eco's RP Decor</li>
+            <li>eco Trees</li>
+            <li>eco's Chibi Displays</li>
+            <li>RR-HomeDeko and more!</li>
           </ul>
         </div>
+      </div>
 
-        <div class="card">
-          <h3>Vanilla / No-mod clusters</h3>
-          <p class="muted small">The Isle and Insurgency servers run no mods. Expect authentic gameplay and competitive fairness.</p>
+      <!-- Cluster 2: Ark Survival Ascended Modded -->
+      <div class="cluster">
+        <h2>Ark Survival Ascended (ASA) - Modded</h2>
+        <p>Location: South Africa</p>
+        <p>Server Browser: <strong>ZARKGaming.co.za: 'Map Name' / QoL Mods / x10 Rates</strong></p>
+        <p>Cluster Type: <strong>Modded</strong></p>
+        <p>Rates: <strong>10x</strong></p>
+        <p>Wipe schedule: <strong>Check Discord for current details</strong></p>
+        <p>Events: <strong>Check Discord for updates</strong></p>
+        <div class="maps">
+          <div class="map-button">Aberration</div>
+          <div class="map-button">Astraeos</div>
+          <div class="map-button">Extinction</div>
+          <div class="map-button">Genesis 1</div>
+          <div class="map-button">Ragnarok</div>
+          <div class="map-button">Scorched Earth</div>
+          <div class="map-button">The Center</div>
+          <div class="map-button">The Island</div>
+          <div class="map-button">Valguero</div>
+          <div class="map-button">Lost Colony</div>
+        </div>
+        <div class="notes">
+          Venture into the breathtaking world of Astraeos on ZARK Gaming's ARK: Survival Ascended server. Tame, build, and survive across a stunning new landscape teeming with danger and discovery. This paid DLC map brings epic biomes, powerful creatures, and endless possibilities - perfect for survivors ready to rise above extinction.
+        </div>
+        <div class="mods">
+          <h3>Mods</h3>
+          <ul>
+            <li>Super Spyglass Plus</li>
+            <li>Crafting Skill Potion</li>
+            <li>Arkitect Structures Remastered</li>
+            <li>Cybers Structures QoL+</li>
+            <li>Dragon's Kingdom</li>
+            <li>Visual Storage</li>
+            <li>Castles, Keeps, and Forts - CKF</li>
+            <li>Additional Creatures Standalones: Cornusaurus</li>
+            <li>Additions Ascended: Brachiosaurus</li>
+            <li>Moros Tylosaurus</li>
+            <li>Additional Creatures: Wild Ark</li>
+            <li>RR-Homedeko and more!</li>
+            <li>Cyrus' Critters: Jumping Spider</li>
+            <li>Cyrus's Critters: Redpanda</li>
+            <li>Moro's Indomitable Duo</li>
+            <li>Dino Depot</li>
+            <li>Paleo ARK - Evolution | Apex Predators</li>
+            <li>S-Dino Variants</li>
+            <li>Prehistoric Beasts Part V</li>
+            <li>FPS Boost Buttons</li>
+          </ul>
         </div>
       </div>
-    </section>
 
-    <section id="status" class="status">
-      <h2 style="color:var(--accent)">Live Server Status</h2>
-      <div class="card">
-        <div class="status-sections">
-          <section>
-            <h3 style="color:var(--accent)">ASE — Ark Survival Evolved</h3>
-            <div class="iframes">
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37741955.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="oqgaa" title="ASE Aberration"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37348625.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="vcevl" title="ASE Crystal Isles"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37385769.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="qibpw" title="ASE Extinction"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37364339.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="tsiyn" title="ASE Fjordur"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37588386.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="cbqwk" title="ASE Genesis 1"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37347868.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="dnzrk" title="ASE Genesis 2"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37348626.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="dbpit" title="ASE Ragnarok"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37580680.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="kwasm" title="ASE Scorched Earth"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37407389.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gpctr" title="ASE The Center"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37347870.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gdsvt" title="ASE The Island"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37411522.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="vlktl" title="ASE The Lost Island"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37362369.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gqluh" title="ASE Valguero"></iframe>
-            </div>
-          </section>
-
-          <section style="margin-top:1rem">
-            <h3 style="color:var(--accent)">ASA — Ark Survival Ascended</h3>
-            <div class="small muted" style="margin-bottom:.5rem">10x (QoL) cluster</div>
-            <div class="iframes">
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351913.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="npieb" title="ASA Aberration"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351912.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="jfjuu" title="ASA Astraeos"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351911.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="dlitg" title="ASA Extinction"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351950.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="sveqd" title="ASA Ragnarok"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351949.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="lsrzx" title="ASA Scorched Earth"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352016.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gotwl" title="ASA The Center"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352019.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="fzhjh" title="ASA The Island"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352017.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="kujsb" title="ASA Valguero"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37352053.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="otrxn" title="ASA Lost Colony"></iframe>
-            </div>
-
-            <div class="small muted" style="margin-top:.6rem;margin-bottom:.5rem">3x (Vanilla) cluster</div>
-            <div class="iframes">
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37350998.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="hoxri" title="ASA Vanilla Aberration"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37350997.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="mwzeo" title="ASA Vanilla Astraeos"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37350996.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="gwywt" title="ASA Vanilla Extinction"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351028.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="cdhzq" title="ASA Vanilla Ragnarok"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351083.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="kuaus" title="ASA Vanilla Scorched Earth"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351177.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="hqhyc" title="ASA Vanilla The Center"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351176.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="ycxyh" title="ASA Vanilla The Island"></iframe>
-              <iframe src="https://cdn.battlemetrics.com/b/horizontal500x80px/37351175.html?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" frameborder="0" style="border:0" name="zyhqi" title="ASA Vanilla Valguero"></iframe>
-            </div>
-          </section>
+      <!-- Cluster 3: Ark Survival Ascended Vanilla -->
+      <div class="cluster">
+        <h2>Ark Survival Ascended (ASA) - Vanilla</h2>
+        <p>Location: South Africa</p>
+        <p>Server Browser: <strong>ZARKGaming.co.za: 'Map Name' / Vanilla / x3 Rates</strong></p>
+        <p>Cluster Type: <strong>Vanilla-ish</strong></p>
+        <p>Rates: <strong>3x</strong></p>
+        <p>Wipe schedule: <strong>Check Discord for current details</strong></p>
+        <p>Events: <strong>Check Discord for updates</strong></p>
+        <div class="maps">
+          <div class="map-button">Aberration</div>
+          <div class="map-button">Astraeos</div>
+          <div class="map-button">Extinction</div>
+          <div class="map-button">Genesis 1</div>
+          <div class="map-button">Ragnarok</div>
+          <div class="map-button">Scorched Earth</div>
+          <div class="map-button">The Center</div>
+          <div class="map-button">The Island</div>
+          <div class="map-button">Valguero</div>
+          <div class="map-button">Lost Colony</div>
         </div>
-        <p class="small muted" style="margin-top:.75rem">If an embed fails to load, check our Discord for outage reports or direct IPs.</p>
+        <div class="notes">
+          Venture into ARK: Survival Ascended the way the developers meant it-pure, unmodified, and fiercely beautiful. The ZARK Gaming ASA Vanilla Cluster delivers a clean and authentic survival experience with balanced 3x rates, keeping every victory earned and every tame meaningful. Explore lush biomes, face iconic creatures, and build your legacy across official-style maps where skill, strategy, and grit matter far more than shortcuts. Perfect for players who want ARK in its raw, classic form—refined only by performance, community, and adventure.
+        </div>
+        <div class="mods">
+          <h3>Mods</h3>
+          <ul>
+            <li>FPS Boost Buttons</li>
+            <li>Dino Depot</li>
+          </ul>
+        </div>
       </div>
-    </section>
 
+      <!-- Cluster 4: The Isle - Evrima -->
+      <div class="cluster">
+        <h2>The Isle: Evrima</h2>
+        <p>Location: South Africa</p>
+        <p>Server Browser: <strong>ZARKGaming.co.za: Serengeti Rift</strong></p>
+        <p>Cluster Type: <strong>PvP</strong></p>
+        <p>Rates: <strong>Standard</strong></p>
+        <p>Wipe schedule: <strong>Check Discord for current details</strong></p>
+        <p>Events: <strong>Check Discord for updates</strong></p>
+        <div class="maps">
+          <div class="map-button">Gateway</div>
+        </div>
+        <div class="notes">
+          Enter the unforgiving world of The Isle: Evrima on ZARK Gaming's dedicated South African server. Survive as a growing dinosaur in a harsh open world where stealth, hunger, and instinct decide your fate. Whether you stalk prey as a carnivore or outsmart predators as a herbivore, every moment is a struggle for dominance and survival. No mods, no shortcuts-just raw, primal gameplay.
+        </div>
+        <div class="mods">
+          <h3>Mods</h3>
+          <ul>
+            <li>No mods installed</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cluster 5: Insurgency Sandstorm -->
+      <div class="cluster">
+        <h2>Insurgency Sandstorm</h2>
+        <p>Location: South Africa</p>
+        <p>Server Browser: <strong>ZARKGaming.co.za: Last Checkpoint</strong></p>
+        <div class="maps">
+          <div class="map-button">Precinct</div>
+          <div class="map-button">Ministry</div>
+          <div class="map-button">Crossing</div>
+          <div class="map-button">Outskirts</div>
+          <div class="map-button">Tell</div>
+          <div class="map-button">Power Plant</div>
+          <div class="map-button">Refinery</div>
+          <div class="map-button">Hillside</div>
+          <div class="map-button">Summit</div>
+          <div class="map-button">Farmhouse</div>
+          <div class="map-button">Hideout</div>
+          <div class="map-button">Gap</div>
+          <div class="map-button">Tideway</div>
+          <div class="map-button">Citadel</div>
+          <div class="map-button">Ambush</div>
+          <div class="map-button">Power Station</div>
+        </div>
+        <div class="notes">
+          Lock and load for intense co-op action on ZARK Gaming`s Insurgency: Sandstorm server! Dive into Checkpoint mode with up to 20 players facing off against 40 AI enemies in gritty, tactical battles. Teamwork, communication, and precision are your best weapons - because here, every round counts.
+        </div>
+        <div class="mods">
+          <h3>Mods</h3>
+          <ul>
+            <li>No mods installed</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    </details>
   </main>
 
   <footer>
-    &copy; 2026 ZARK Gaming • Join our Discord: <a href="https://zarkgaming.co.za/discord" style="color:var(--accent)" target="_blank">zarkgaming.co.za/discord</a>
+    &copy; 2026 ZARK Gaming South Africa
   </footer>
 
   <script>
-    // small helper to adjust iframe heights if BattleMetrics posts a sizeUpdate
-    window.addEventListener('message', function(e){
-      if(e && e.data && e.data.uid && e.data.type==='sizeUpdate'){
-        var iframe = document.querySelector('iframe[name="'+e.data.uid+'"]');
-        if(iframe){iframe.style.height = e.data.payload.height}
-      }
+    document.querySelectorAll(".filter").forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        document.querySelectorAll(".filter").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+        document.querySelectorAll(".server-card").forEach((card) => {
+          card.hidden = filter !== "all" && card.dataset.game !== filter;
+        });
+      });
     });
   </script>
 </body>
